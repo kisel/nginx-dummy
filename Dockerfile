@@ -5,6 +5,7 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu/ precise main universe" > /etc/ap
 RUN apt-get update
 RUN apt-get install -y nginx && apt-get clean
 ADD nginx.conf /root/nginx.conf
+ADD run.sh /root/run.sh
 WORKDIR /root
-ENTRYPOINT ["nginx", "-c", "/root/nginx.conf"]
+ENTRYPOINT ["sh", "-c", "/root/run.sh"]
 

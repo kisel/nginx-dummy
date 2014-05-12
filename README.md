@@ -1,15 +1,20 @@
-Runs nginx dummy for performance testing on *port 7000*
+Runs nginx dummy for performance testing.
 
-### Apply network tweaks
+### Ports:
+- http  7080
+- https 7443
 
-    curl -L https://gist.github.com/kisel/77d2bcafdf32f059f0a0/raw/tune_network.sh | sudo bash
+### To run w/o docker
+Root access is required (via sudo) to perform kernel tweaking, extending `ulimit -n`
 
-### You can also run nginx in-place
-
-    sudo nginx -c `pwd`/nginx.conf
+    sudo apt-get install -y nginx
+    git clone https://github.com/kisel/nginx-dummy.git
+    cd nginx-dummy
+    sh run.sh
 
 ### Dockerfile for dummy nginx server
+Run inside Docker. This will have lower performance
 
     docker build -t kisel/nginx-dummy github.com/kisel/nginx-dummy
-    docker run -p 7000:7000 kisel/nginx-dummy
+    docker run -p 7080:7080 -p 7443:7443 kisel/nginx-dummy
 
