@@ -8,14 +8,19 @@
 
 [ -z "$HTTP_PORT" ] && HTTP_PORT=7080
 [ -z "$HTTPS_PORT" ] && HTTPS_PORT=7443
+
 [ -z "$LOGGING" ] && LOGGING=error
+
+CFG_DIR=/tmp/nginx-dummy.$HTTP_PORT
+NGINX_CONF=$CFG_DIR/nginx.conf
+ACCESS_LOG=off
+[ -n "$ACCESS" ] && ACCESS_LOG=$CFG_DIR/access.log
 
 main() {
   sudo sh network-tweaks.sh
 
-  CFG_DIR=/tmp/nginx-dummy.$HTTP_PORT
-  NGINX_CONF=$CFG_DIR/nginx.conf
   mkdir -p $CFG_DIR
+
 
   openssl genrsa -out $CFG_DIR/ssl.key 2048
   openssl req -new -x509 -key $CFG_DIR/ssl.key -out $CFG_DIR/ssl.cert -days 3650 -subj /CN=localhost
@@ -46,7 +51,7 @@ http {
     open_file_cache_min_uses 2;
     open_file_cache_errors on;
 
-    access_log off;
+    access_log $ACCESS_LOG;
 
     # copies data between one FD and other from within the kernel
     # faster then read() + write()
