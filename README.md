@@ -4,17 +4,27 @@ Runs nginx dummy for performance testing.
 - http  7080
 - https 7443
 
+### Run in Docker
+Build the image:
+
+    docker build -t kisel/nginx-dummy github.com/kisel/nginx-dummy
+
+Run inside Docker using native network interface(requires Docker >= 0.11)
+to avoid performance drop.
+Privileged option is required to increase ulimit and apply kernel settings
+
+    docker run -e HTTP_PORT=7080 -e HTTPS_PORT=7443 -d -t nginx-dummy --privileged --net="bridge" kisel/nginx-dummy
+
+Run inside Docker network. (lower performance)
+
+    docker run -d --privileged -p 7080:7080 -p 7443:7443 kisel/nginx-dummy
+
 ### To run w/o docker
 Root access is required (via sudo) to perform kernel tweaking, extending `ulimit -n`
 
     sudo apt-get install -y nginx
     git clone https://github.com/kisel/nginx-dummy.git
     cd nginx-dummy
-    sh run.sh
-
-### Dockerfile for dummy nginx server
-Run inside Docker. This will have lower performance
-
-    docker build -t kisel/nginx-dummy github.com/kisel/nginx-dummy
-    docker run -p 7080:7080 -p 7443:7443 kisel/nginx-dummy
+    # run nginx. to use defaults just run sh run.sh
+    env HTTP_PORT=7080 HTTPS_PORT=7443 sh run.sh
 

@@ -3,9 +3,8 @@ MAINTAINER Anton Kiselev <anton.kisel@gmail.com>
 
 RUN echo "deb http://archive.ubuntu.com/ubuntu/ precise main universe" > /etc/apt/sources.list
 RUN apt-get update
-RUN apt-get install -y nginx && apt-get clean
-ADD nginx.conf /root/nginx.conf
+RUN apt-get install -y nginx openssl curl && apt-get clean
 ADD run.sh /root/run.sh
 WORKDIR /root
-ENTRYPOINT ["sh", "-c", "/root/run.sh"]
+CMD sh /root/run.sh
 
