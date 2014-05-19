@@ -11,7 +11,7 @@
 [ -z "$LOGGING" ] && LOGGING=error
 
 main() {
-  curl -L https://gist.github.com/kisel/77d2bcafdf32f059f0a0/raw/tune_network.sh | sudo bash
+  sudo sh network-tweaks.sh
 
   CFG_DIR=/tmp/nginx-dummy.$HTTP_PORT
   NGINX_CONF=$CFG_DIR/nginx.conf

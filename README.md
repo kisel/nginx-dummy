@@ -13,7 +13,7 @@ Run inside Docker using native network interface(requires Docker >= 0.11)
 to avoid performance drop.
 Privileged option is required to increase ulimit and apply kernel settings
 
-    docker run -e HTTP_PORT=7080 -e HTTPS_PORT=7443 -d -t nginx-dummy --privileged --net="bridge" kisel/nginx-dummy
+    docker run -e HTTP_PORT=7080 -e HTTPS_PORT=7443 -d --name nginx-dummy --privileged --net="bridge" kisel/nginx-dummy
 
 Run inside Docker network. (lower performance)
 
