@@ -8,6 +8,7 @@
 
 [ -z "$HTTP_PORT" ] && HTTP_PORT=7080
 [ -z "$HTTPS_PORT" ] && HTTPS_PORT=7443
+[ -z "$WORKERS" ] && WORKERS=4
 
 [ -z "$LOGGING" ] && LOGGING=error
 
@@ -31,7 +32,7 @@ main() {
 
 gen_nginx_cfg() {
 cat <<END > $NGINX_CONF
-worker_processes 2;
+worker_processes $WORKERS;
 daemon off;
 
 events {

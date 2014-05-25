@@ -32,11 +32,12 @@ Root access is required (via sudo) to perform kernel tweaking, extending `ulimit
     git clone https://github.com/kisel/nginx-dummy.git
     cd nginx-dummy
     # run nginx. to use defaults just run sh run.sh
-    env HTTP_PORT=7080 HTTPS_PORT=7443 sh run.sh
+    env WORKERS=4 HTTP_PORT=7080 HTTPS_PORT=7443 sh run.sh
 
 ### Additional options
 can be specified as env vars
 
 - LOGGING=error|warn|info|debug  - sets nginx error_log filter
 - ACCESS=<empty>|1 - enables access logs to /tmp/nginx-dummy.<http-port>/access.log
+- WORKERS=<num> | auto - sets worker_processes. 4 by default
 
