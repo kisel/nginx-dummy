@@ -24,7 +24,7 @@ sysctlprop net.core.netdev_max_backlog "10000"
 # http://datatag.web.cern.ch/datatag/howto/tcp.html
 sysctlprop net.ipv4.tcp_tw_recycle "1"
 sysctlprop net.ipv4.tcp_tw_reuse "1"
-sysctlprop net.ipv4.tcp_max_syn_backlog "262144"
+sysctlprop net.ipv4.tcp_max_syn_backlog "65535"
 sysctlprop net.ipv4.tcp_sack "0"
 
 # listen() backlog limit for established sockets.
