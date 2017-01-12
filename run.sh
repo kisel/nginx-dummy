@@ -2,9 +2,6 @@
 # applies network tweaks
 # generates nginx configuration in /tmp/nginx-dummy.<http_port>/
 # and runs nginx
-# vars:
-# HTTP_PORT, HTTPS_PORT ( defaults 7080, 7443 )
-
 
 [ -z "$HTTP_PORT" ] && HTTP_PORT=7080
 [ -z "$HTTPS_PORT" ] && HTTPS_PORT=7443
@@ -27,6 +24,9 @@ main() {
   openssl req -new -x509 -key $CFG_DIR/ssl.key -out $CFG_DIR/ssl.cert -days 3650 -subj /CN=localhost
 
   gen_nginx_cfg
+  echo "starting nginx"
+  echo "http port: $HTTP_PORT"
+  echo "https port: $HTTPS_PORT"
   sudo nginx -c $NGINX_CONF
 }
 
@@ -46,7 +46,7 @@ error_log stderr $LOGGING;
 http {
     # cache informations about FDs, frequently accessed files
     # can boost performance, but you need to test those values
-    open_file_cache max=200000 inactive=20s;
+    open_file_cache max=60000 inactive=20s;
     open_file_cache_valid 30s;
     open_file_cache_min_uses 2;
     open_file_cache_errors on;
@@ -68,8 +68,6 @@ http {
 
     # if client stop responding, free up memory -- default 60
     send_timeout 60;
-
-    types_hash_max_size 2048;
 
     server {
         listen $HTTP_PORT default_server;
