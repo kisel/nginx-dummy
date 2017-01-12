@@ -29,3 +29,7 @@ can be specified as env vars
 - ACCESS=<empty>|1 - enables access logs to /tmp/nginx-dummy.<http-port>/access.log
 - WORKERS=<num> | auto - sets worker_processes. 4 by default
 
+
+### Network tweaks
+you may want to run `network-tweaks.sh` on a host instance to optimize network performance
+

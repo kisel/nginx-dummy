@@ -1,5 +1,4 @@
 #!/bin/sh
-# applies network tweaks
 # generates nginx configuration in /tmp/nginx-dummy.<http_port>/
 # and runs nginx
 
@@ -15,19 +14,18 @@ ACCESS_LOG=off
 [ -n "$ACCESS" ] && ACCESS_LOG=$CFG_DIR/access.log
 
 main() {
-  sudo sh network-tweaks.sh
-
   mkdir -p $CFG_DIR
 
 
-  openssl genrsa -out $CFG_DIR/ssl.key 2048
-  openssl req -new -x509 -key $CFG_DIR/ssl.key -out $CFG_DIR/ssl.cert -days 3650 -subj /CN=localhost
+  echo "Generating self-signed https cert"
+  openssl genrsa -out $CFG_DIR/ssl.key 2048 2> /dev/null
+  openssl req -new -x509 -key $CFG_DIR/ssl.key -out $CFG_DIR/ssl.cert -days 3650 -subj /CN=localhost 2> /dev/null
 
   gen_nginx_cfg
-  echo "starting nginx"
+  echo "Starting nginx\n"
   echo "http port: $HTTP_PORT"
   echo "https port: $HTTPS_PORT"
-  sudo nginx -c $NGINX_CONF
+  nginx -c $NGINX_CONF
 }
 
 gen_nginx_cfg() {
@@ -42,6 +40,7 @@ events {
 }
 
 error_log stderr $LOGGING;
+pid $CFG_DIR/nginx.pid;
 
 http {
     # cache informations about FDs, frequently accessed files
