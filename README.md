@@ -3,13 +3,16 @@ Runs nginx dummy for performance testing.
 ### Run in Docker
 default ports are 80(http) and 443(https)
 
-simple mode
+Simple mode
+
     docker run -d --name nginx-dummy kisel/nginx-dummy
 
-getting container internal ip
+Getting container internal ip
+
     docker inspect --format '{{ .NetworkSettings.IPAddress }}' nginx-dummy
 
-privileged mode, no bridge. will use 80 and 443 ports
+Privileged mode, no bridge. will use 80 and 443 ports
+
     docker run -d --name nginx-dummy --net="host" kisel/nginx-dummy
 
 ### To run w/o docker
