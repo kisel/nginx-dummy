@@ -41,7 +41,6 @@ events {
     use epoll;
 }
 
-worker_rlimit_nofile 200000;
 error_log stderr $LOGGING;
 
 http {
